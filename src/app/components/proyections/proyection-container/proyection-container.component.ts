@@ -73,6 +73,7 @@ export class ProyectionContainerComponent {
       from = +(year + '' + (month.length == 1  ? '0' + month : month))
       
     }
+    return this.cols;
 
   }
 
@@ -86,6 +87,7 @@ export class ProyectionContainerComponent {
     let initalProd = this.addDays(new Date(form.fechaSiembra), scale?.production_start_days ?? 0);
     const tableResponse: ProyectionTable[] = [];
     form.proyectionTableByJson = []
+    form.proyectionCols= []
     const objectProcesed = {
       initialProd: initalProd,
       initialWeek: moment(initalProd).week()
@@ -106,14 +108,14 @@ export class ProyectionContainerComponent {
         tableResponse.push(valueTable);
         initalProd = moment(initalProd).add('1', 'weeks').toDate();
         form.expectedProduction += valueByWeek;
+        form.proyectionCols?.push({ field: valueTable.yearWeek, header: valueTable.yearWeek })
         newProyection[valueTable.yearWeek] = valueTable.value;
       }
       
     }
-    form.proyectionTable = tableResponse;
+    
     form.proyectionTableByJson.push(newProyection)
     this.producers.push(form);
-    this.validateMinAndMaxDates();
   }
 
   
@@ -141,23 +143,23 @@ export class ProyectionContainerComponent {
     
   }
 
-  validateMinAndMaxDates(){
-    let maxGlobal = 0;
-    let minGlobal = Number.MAX_VALUE;
-    for(let row of this.producers){
-      const max = row.proyectionTable!.reduce((prev, curr) => prev.yearWeek > curr.yearWeek ? prev : curr).yearWeek;
-      const min = row.proyectionTable!.reduce((prev, curr) => prev.yearWeek < curr.yearWeek ? prev : curr).yearWeek;
-      if(max > maxGlobal){
-        maxGlobal = max
-      }
+  // validateMinAndMaxDates(){
+  //   let maxGlobal = 0;
+  //   let minGlobal = Number.MAX_VALUE;
+  //   for(let row of this.producers){
+  //     const max = row.proyectionTable!.reduce((prev, curr) => prev.yearWeek > curr.yearWeek ? prev : curr).yearWeek;
+  //     const min = row.proyectionTable!.reduce((prev, curr) => prev.yearWeek < curr.yearWeek ? prev : curr).yearWeek;
+  //     if(max > maxGlobal){
+  //       maxGlobal = max
+  //     }
 
-      if(min < minGlobal){
-        minGlobal = min
-      }
+  //     if(min < minGlobal){
+  //       minGlobal = min
+  //     }
       
-    }
-    this.buildCols(minGlobal, maxGlobal);
-  }
+  //   }
+  //   return this.buildCols(minGlobal, maxGlobal);
+  // }
 
   createData(){
     const producer:Producer ={

@@ -19,7 +19,7 @@
 
 
         <div class="card">
-            <p-table [columns]="cols" [value]="produce.proyectionTableByJson!" [tableStyle]="{ 'min-width': '50rem' }">
+            <p-table [columns]="produce.proyectionCols" [value]="produce.proyectionTableByJson!" [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th *ngFor="let col of columns">

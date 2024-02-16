@@ -9,6 +9,6 @@ export interface Producer {
     coeficiente: number;
     exportacion: number;
     expectedProduction?:number;
-    proyectionTable?:ProyectionTable[]
+    proyectionCols?:any[]
     proyectionTableByJson?:any[];
   }
