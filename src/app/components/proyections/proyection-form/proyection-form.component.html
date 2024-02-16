@@ -1,0 +1,58 @@
+
+
+<div  class="container" >
+    <form [formGroup]="form" class="container-form" >
+        <mat-form-field>
+            <mat-label>Municipio</mat-label>
+            <mat-select formControlName="municipio">
+                <mat-option *ngFor="let option of municipioOptions" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Productor" formControlName="productor">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="number" placeholder="#Plantas" formControlName="nPlantas">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Fecha de siembra" formControlName="fechaSiembra">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="number" placeholder="Altura" formControlName="altura">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="number" placeholder="Coeficiente" formControlName="coeficiente">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput type="number" placeholder="exportacion" formControlName="exportacion">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+    </form>
+
+    <div *ngIf="objectProcesed" class="container-response">
+        <div>
+            Initial Production: {{objectProcesed?.initialProd | date}}
+        </div>
+        <div>
+            Initial Week: {{objectProcesed.initialWeek}}
+        </div>
+    </div>
+
+
+
+    
+
+</div>
+
+

@@ -1,0 +1,51 @@
+<div class="card" style="margin-bottom: 15px;">
+    <p-menubar [model]="items"></p-menubar>
+</div>
+<mat-accordion style="margin-top: 10px;">
+    <mat-expansion-panel hideToggle *ngFor="let produce of producers" >
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{produce.productor}}
+            </mat-panel-title>
+            <mat-panel-description>
+                <b>Plantas:</b>  {{produce.nPlantas | number: '1.0-0' }} -- 
+                <b>Altura:</b>  {{produce.altura| number: '1.0-0' }} -- 
+                <b>Coeficiente:</b>  {{produce.coeficiente| number: '1.0-0' }}% -- 
+                <b>Exportacion:</b>  {{produce.exportacion| number: '1.0-0' }}% -- 
+                <b>Fecha Siembra:</b>  {{produce.fechaSiembra | date }} 
+                <b>Produccion Esperada:</b>  {{produce.expectedProduction| number: '1.0-0' }} 
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+        <div class="card">
+            <p-table [columns]="cols" [value]="produce.proyectionTableByJson!" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{ col.header }}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>
+                        <td *ngFor="let col of columns">
+                            {{ rowData[col.field]  | number: '1.0-0' }}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+    </mat-expansion-panel>
+</mat-accordion>
+
+
+
+
+
+
+<p-dialog header="Header" [(visible)]="visible" [style]="{width: '50vw'}">
+    <app-proyection-form (createProducer)="createProducer($event)"></app-proyection-form>
+</p-dialog>
